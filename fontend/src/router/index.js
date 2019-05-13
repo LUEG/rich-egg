@@ -1,15 +1,36 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import HelloWorld from '@/components/HelloWorld'
 
 Vue.use(Router)
+const _import = (file) => require('@/components' + file + '.vue').default
 
-export default new Router({
+const router = new Router({
+  mode: 'history',
   routes: [
     {
-      path: '/',
-      name: 'HelloWorld',
-      component: HelloWorld
-    }
-  ]
+      path: '/mobile',
+      name: 'mobile',
+      component: _import('/mobile/index'),
+      meta: {
+        title: '移动端'
+      },
+      children: [
+        {
+          path: 'what-to-eat',
+          name: 'what-to-eat',
+          component: _import('/mobile/what-to-eat'),
+          meta: {
+            title: '今天吃什么'
+          }
+        }]
+    },
+    {
+      path: 'pc',
+      name: 'pc',
+      component: _import('/pc/index'),
+      meta: {
+        title: 'PC端'
+      }
+    }]
 })
+export default router
