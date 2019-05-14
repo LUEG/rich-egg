@@ -5,7 +5,6 @@ Vue.use(Router)
 const _import = (file) => require('@/components' + file + '.vue').default
 
 const router = new Router({
-  mode: 'history',
   routes: [
     {
       path: '/mobile',
@@ -33,4 +32,12 @@ const router = new Router({
       }
     }]
 })
+router.beforeEach((to, from, next) => {
+  /* 路由发生变化修改页面title */
+  if (to.meta.title) {
+    document.title = to.meta.title
+  }
+  next()
+})
+
 export default router
